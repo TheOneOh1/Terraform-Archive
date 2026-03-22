@@ -49,16 +49,16 @@ flowchart TD
     B -->|Generates| C[/"modules-manifest.json"/]:::file
     B -->|Generates| D[/"search-data.json"/]:::file
 
-    sublayer1["Client Application (Vanilla JS Single Page App)"]
-    C -->|Fetch| E("Module Router (main.js)"):::process
-    D -->|Fetch| F("Global Search (FlexSearch)"):::process
-    
-    A -.->|Runtime Fetch| G("Markdown Renderer (marked + hljs)"):::process
-    E --> G
-    
-    G --> H("UI Components (Dashboard, Module View)"):::process
-    H -->|Saves Progress| I[("localStorage")]:::storage
-    I -->|Calculates Points| J("Readiness Score Header"):::process
+    subgraph ClientApp ["Client Application (Vanilla JS Single Page App)"]
+        C -->|Fetch| E("Module Router (main.js)"):::process
+        D -->|Fetch| F("Global Search (FlexSearch)"):::process
+        
+        A -.->|Runtime Fetch| G("Markdown Renderer (marked + hljs)"):::process
+        E --> G
+        
+        G --> H("UI Components (Dashboard, Module View)"):::process
+        H -->|Saves Progress| I[("localStorage")]:::storage
+        I -->|Calculates Points| J("Readiness Score Header"):::process
     end
 ```
 
