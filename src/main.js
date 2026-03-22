@@ -9,6 +9,7 @@ import './styles/module-view.css';
 import './styles/assessment.css';
 import './styles/projects.css';
 
+import { initSearch } from './components/search.js';
 import { initModules } from './utils/content.js';
 import { Router } from './utils/router.js';
 import { renderLanding } from './pages/landing.js';
@@ -27,6 +28,7 @@ function withScrollTop(handler) {
 
 // Initialize modules from manifest, then start router
 async function boot() {
+  initSearch();
   await initModules();
 
   const router = new Router([

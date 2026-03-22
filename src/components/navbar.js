@@ -28,6 +28,10 @@ export function renderNavbar(activeRoute = '') {
           <span class="navbar__logo-sub">Study Portal</span>
         </a>
         <div class="navbar__nav">
+          <button class="navbar__search-btn" onclick="openSearch()">
+            <span class="material-symbols-outlined">search</span>
+            Search... <kbd>⌘K</kbd>
+          </button>
           ${linksHtml}
         </div>
       </div>

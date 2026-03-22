@@ -16,6 +16,7 @@ const __dirname = path.dirname(__filename);
 const ROOT = path.resolve(__dirname, '..');
 const CONTENT_DIR = path.join(ROOT, 'terraform-content');
 const OUTPUT_FILE = path.join(ROOT, 'public', 'modules-manifest.json');
+const SEARCH_DATA_FILE = path.join(ROOT, 'public', 'search-data.json');
 
 // Section file mapping
 const SECTION_FILES = {
@@ -125,6 +126,7 @@ function main() {
     .sort((a, b) => a.name.localeCompare(b.name));
 
   console.log(`Found ${moduleDirs.length} module directories`);
+  const searchData = [];
 
   const modules = moduleDirs.map(dir => {
     const modulePath = path.join(CONTENT_DIR, dir.name);
@@ -139,11 +141,24 @@ function main() {
     const topicSlug = match[2];
     const title = slugToTitle(topicSlug);
 
-    // Detect available sections
+    // Detect available sections and index them for search
     const sections = [];
     for (const [key, file] of Object.entries(SECTION_FILES)) {
-      if (fs.existsSync(path.join(modulePath, file))) {
+      const filePath = path.join(modulePath, file);
+      if (fs.existsSync(filePath)) {
         sections.push(key);
+        
+        // Add to search index
+        const content = fs.readFileSync(filePath, 'utf-8');
+        // Strip markdown artifacts for cleaner search snippets
+        const plainText = content.replace(/[#*`>\[\]\(\)-_]/g, ' ').replace(/\s+/g, ' ').trim();
+        
+        searchData.push({
+          id: `${id}-${key}`,
+          title: `${title} — ${key.charAt(0).toUpperCase() + key.slice(1)}`,
+          content: plainText,
+          url: `#/module/${id}/${key}`
+        });
       }
     }
 
@@ -169,6 +184,10 @@ function main() {
   const manifest = { modules, generatedAt: new Date().toISOString() };
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(manifest, null, 2));
   console.log(`\nManifest written to ${OUTPUT_FILE} (${modules.length} modules)`);
+
+  // Write search data
+  fs.writeFileSync(SEARCH_DATA_FILE, JSON.stringify(searchData, null, 2));
+  console.log(`Search data written to ${SEARCH_DATA_FILE} (${searchData.length} indexed documents)`);
 }
 
 main();
