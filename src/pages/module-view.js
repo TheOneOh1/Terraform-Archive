@@ -116,6 +116,35 @@ export async function renderModuleView(params) {
     const contentEl = document.getElementById('markdown-content');
     if (contentEl && content) {
       contentEl.innerHTML = renderMarkdown(content);
+      
+      // Rewrite relative markdown links to router hashes
+      const links = contentEl.querySelectorAll('a');
+      links.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href.endsWith('.md') && !href.startsWith('http')) {
+          let targetModuleId = moduleId;
+          let filePart = href;
+          
+          // Handle cross-module links (e.g. "../02/theory.md")
+          if (href.startsWith('../')) {
+            const parts = href.split('/');
+            if (parts.length >= 3) {
+              targetModuleId = parts[1];
+              filePart = parts.slice(2).join('/');
+            }
+          }
+
+          let targetSection = 'theory';
+          if (filePart.includes('lab.md')) targetSection = 'lab';
+          else if (filePart.includes('assignment.md')) targetSection = 'assignment';
+          else if (filePart.includes('quiz.md')) targetSection = 'quiz';
+          else if (filePart.includes('project')) targetSection = 'project';
+          else if (filePart.includes('theory.md')) targetSection = 'theory';
+          
+          link.setAttribute('href', `#/module/${targetModuleId}/${targetSection}`);
+        }
+      });
+      
     } else if (contentEl) {
       contentEl.innerHTML = `
         <div style="text-align: center; padding: var(--space-16) 0;">
