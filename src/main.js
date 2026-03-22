@@ -8,6 +8,7 @@ import './styles/dashboard.css';
 import './styles/module-view.css';
 import './styles/assessment.css';
 import './styles/projects.css';
+import './styles/certificate.css';
 
 import { initSearch } from './components/search.js';
 import { initModules } from './utils/content.js';
@@ -17,6 +18,7 @@ import { renderDashboard } from './pages/dashboard.js';
 import { renderModuleView } from './pages/module-view.js';
 import { renderAssessments, renderQuiz } from './pages/assessment.js';
 import { renderProjects } from './pages/projects.js';
+import { renderCertificate } from './pages/certificate.js';
 
 // Scroll to top on page change
 function withScrollTop(handler) {
@@ -38,6 +40,7 @@ async function boot() {
     { path: '/assessments', handler: withScrollTop(renderAssessments) },
     { path: '/quiz/:moduleId', handler: withScrollTop(renderQuiz) },
     { path: '/projects', handler: withScrollTop(renderProjects) },
+    { path: '/certificate', handler: withScrollTop(renderCertificate) },
   ]);
 
   router.init();

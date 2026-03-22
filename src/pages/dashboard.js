@@ -3,7 +3,7 @@
  */
 import { renderNavbar, initNavbar } from '../components/navbar.js';
 import { renderFooter } from '../components/footer.js';
-import { getModules, SECTION_META, isVisited } from '../utils/content.js';
+import { getModules, SECTION_META, isVisited, getReadinessData } from '../utils/content.js';
 
 function renderModuleCard(mod) {
   // Only show checklist items for available sections
@@ -50,6 +50,7 @@ export function renderDashboard() {
   const app = document.getElementById('app');
   const modules = getModules();
   const moduleCards = modules.map(renderModuleCard).join('');
+  const readiness = getReadinessData();
 
   app.innerHTML = `
     ${renderNavbar('#/dashboard')}
@@ -62,6 +63,27 @@ export function renderDashboard() {
             Your progression through the Terraform Associate curriculum. Each module is a blueprint for mastery in modern provisioning.
           </p>
         </header>
+
+        <!-- Gamification Banner -->
+        <div class="readiness-banner">
+          <div class="readiness__info">
+            <h2 class="readiness__title">Associate Readiness</h2>
+            <p class="readiness__level">Level: <strong>${readiness.level}</strong></p>
+            <p class="readiness__pts">${readiness.earnedScore} / ${readiness.totalPossibleScore} pts</p>
+          </div>
+          <div class="readiness__score">
+            <div class="score-circle">
+              <span>${readiness.percentage}%</span>
+            </div>
+          </div>
+          <div class="readiness__action">
+            ${readiness.isEligibleForCert 
+              ? `<a href="#/certificate" class="btn btn-primary"><span class="material-symbols-outlined">workspace_premium</span> View Certificate</a>` 
+              : `<button class="btn btn-secondary btn-locked" disabled><span class="material-symbols-outlined">lock</span> Certificate Locked (80% req)</button>`
+            }
+          </div>
+        </div>
+
         <div class="modules-grid">
           ${moduleCards}
         </div>

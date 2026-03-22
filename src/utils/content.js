@@ -36,6 +36,14 @@ export const SECTION_META = {
   },
 };
 
+export const SECTION_POINTS = {
+  theory: 10,
+  lab: 20,
+  assignment: 15,
+  quiz: 25,
+  project: 30
+};
+
 /**
  * Initialize modules from the generated manifest.
  * Must be called before accessing MODULES.
@@ -124,4 +132,38 @@ export function markVisited(moduleId, section) {
 export function isVisited(moduleId, section) {
   const progress = getProgress();
   return !!(progress[moduleId] && progress[moduleId][section]);
+}
+
+/**
+ * Gamification: Calculate total score across all modules
+ */
+export function getReadinessData() {
+  const progress = getProgress();
+  let earnedScore = 0;
+  let totalPossibleScore = 0;
+  
+  _modules.forEach(mod => {
+    mod.sections.forEach(sec => {
+      const pts = SECTION_POINTS[sec] || 0;
+      totalPossibleScore += pts;
+      if (progress[mod.id] && progress[mod.id][sec]) {
+        earnedScore += pts;
+      }
+    });
+  });
+  
+  const percentage = totalPossibleScore === 0 ? 0 : Math.round((earnedScore / totalPossibleScore) * 100);
+  
+  let level = 'Novice';
+  if (percentage >= 80) level = 'Architect';
+  else if (percentage >= 50) level = 'Practitioner';
+  else if (percentage >= 20) level = 'Apprentice';
+  
+  return {
+    earnedScore,
+    totalPossibleScore,
+    percentage,
+    level,
+    isEligibleForCert: percentage >= 80
+  };
 }
