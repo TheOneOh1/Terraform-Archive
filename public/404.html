@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redirecting — Terraform: Archive</title>
+  <script>
+    // GitHub Pages SPA fallback
+    // Redirects 404 requests to index.html with the path preserved as a hash route
+    const path = window.location.pathname;
+    const hash = window.location.hash;
+    if (path !== '/' && path !== '/index.html') {
+      window.location.replace('/#' + path + hash);
+    } else {
+      window.location.replace('/');
+    }
+  </script>
+</head>
+<body>
+  <p>Redirecting…</p>
+</body>
+</html>

@@ -1,0 +1,290 @@
+/* ============================================================
+   GLOBAL STYLES — Reset, Base, Dot-Grid Texture, Typography
+   ============================================================ */
+
+@import './design-tokens.css';
+
+/* ── Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--body-md);
+  line-height: 1.7;
+  color: var(--on-surface);
+  background-color: var(--background);
+  min-height: 100vh;
+}
+
+/* ── Blueprint Dot-Grid Texture ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(var(--outline) 0.5px, transparent 0.5px);
+  background-size: 24px 24px;
+  opacity: 0.04;
+}
+
+#app {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Typography ── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-headline);
+  color: var(--on-surface);
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+h1 { font-size: var(--display-sm); margin-bottom: var(--space-6); }
+h2 { font-size: var(--headline-lg); margin-bottom: var(--space-5); }
+h3 { font-size: var(--headline-sm); margin-bottom: var(--space-4); }
+h4 { font-size: var(--title-lg); margin-bottom: var(--space-3); }
+h5 { font-size: var(--title-md); margin-bottom: var(--space-3); }
+h6 { font-size: var(--title-sm); margin-bottom: var(--space-2); }
+
+p {
+  margin-bottom: var(--space-4);
+  max-width: 72ch;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+a:hover {
+  color: var(--primary-dim);
+}
+
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+/* ── Label Typography (Archival "Stamped" Style) ── */
+.label {
+  font-family: var(--font-label);
+  font-size: var(--label-md);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--on-surface-variant);
+  font-weight: 500;
+}
+
+.label-lg {
+  font-family: var(--font-label);
+  font-size: var(--label-lg);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--on-surface-variant);
+  font-weight: 500;
+}
+
+/* ── Code Blocks ── */
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--surface-container-highest);
+  padding: 0.15em 0.4em;
+  border-radius: var(--rounded-sm);
+  color: var(--primary-dim);
+}
+
+pre {
+  background: var(--surface-container-highest);
+  border-radius: var(--rounded-md);
+  padding: var(--space-5);
+  overflow-x: auto;
+  margin-bottom: var(--space-6);
+  position: relative;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--on-surface);
+}
+
+/* ── Blockquotes ── */
+blockquote {
+  background: var(--surface-container-low);
+  padding: var(--space-4) var(--space-5);
+  margin-bottom: var(--space-5);
+  border-left: 3px solid var(--primary);
+  border-radius: 0 var(--rounded-md) var(--rounded-md) 0;
+  font-style: italic;
+}
+
+blockquote p:last-child { margin-bottom: 0; }
+
+/* ── Tables ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--space-6);
+  font-size: var(--body-sm);
+}
+
+thead {
+  background: var(--surface-container-high);
+}
+
+th {
+  font-family: var(--font-label);
+  font-weight: 600;
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  color: var(--on-surface);
+  font-size: var(--label-lg);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+td {
+  padding: var(--space-3) var(--space-4);
+  color: var(--on-surface-variant);
+}
+
+tbody tr {
+  background: var(--surface-container-lowest);
+  transition: background var(--transition-fast);
+}
+
+tbody tr:nth-child(even) {
+  background: var(--surface-container-low);
+}
+
+tbody tr:hover {
+  background: var(--surface-container);
+}
+
+/* ── Lists ── */
+ul, ol {
+  margin-bottom: var(--space-4);
+  padding-left: var(--space-6);
+}
+
+li {
+  margin-bottom: var(--space-2);
+  line-height: 1.6;
+}
+
+li::marker {
+  color: var(--primary);
+}
+
+/* ── Horizontal Rule ── */
+hr {
+  border: none;
+  height: 1px;
+  background: var(--outline-variant);
+  opacity: 0.3;
+  margin: var(--space-10) 0;
+}
+
+/* ── Images ── */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--rounded-md);
+}
+
+/* ── Selection ── */
+::selection {
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+}
+
+/* ── Scrollbar (subtle) ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--outline-variant);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--outline);
+}
+
+/* ── Utility Classes ── */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+/* ── Technical "Stamp" Chips ── */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--rounded-sm);
+  font-family: var(--font-label);
+  font-size: var(--label-md);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.chip-success {
+  background: var(--tertiary-container);
+  color: var(--on-tertiary-container);
+}
+
+.chip-primary {
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+}
+
+.chip-warning {
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
+}
+
+.chip-neutral {
+  background: var(--surface-container-high);
+  color: var(--on-surface-variant);
+}
+
+/* ── Page Transitions ── */
+.page-enter {
+  animation: fadeIn var(--transition-normal) ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

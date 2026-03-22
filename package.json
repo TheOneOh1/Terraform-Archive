@@ -1,0 +1,19 @@
+{
+  "name": "terra-site",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "generate-manifest": "node scripts/generate-manifest.js",
+    "predev": "node scripts/generate-manifest.js",
+    "prebuild": "node scripts/generate-manifest.js",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "highlight.js": "^11.11.1",
+    "marked": "^17.0.5",
+    "vite": "^8.0.1"
+  }
+}
