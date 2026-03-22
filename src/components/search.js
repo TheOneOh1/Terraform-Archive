@@ -27,8 +27,8 @@ function stripMarkdown(md) {
 async function initSearchData() {
   if (searchIndex) return;
   try {
-    const res = await fetch('/search-data.json');
-    if (!res.ok) throw new Error('Failed to load search index');
+    const res = await fetch(import.meta.env.BASE_URL + 'search-data.json');
+    if (!res.ok) throw new Error('Search data not found');
     
     searchData = await res.json();
     

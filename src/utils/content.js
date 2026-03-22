@@ -51,7 +51,7 @@ export const SECTION_POINTS = {
 export async function initModules() {
   if (_initialized) return _modules;
   try {
-    const res = await fetch('/modules-manifest.json');
+    const res = await fetch(import.meta.env.BASE_URL + 'modules-manifest.json');
     if (!res.ok) throw new Error('Manifest not found');
     const data = await res.json();
     _modules = data.modules || [];
@@ -98,7 +98,7 @@ export function getModulesWithSection(section) {
  * Fetch markdown content for a module section.
  */
 export async function fetchContent(moduleSlug, sectionFile) {
-  const url = `/terraform-content/${moduleSlug}/${sectionFile}`;
+  const url = import.meta.env.BASE_URL + `terraform-content/${moduleSlug}/${sectionFile}`;
   try {
     const response = await fetch(url);
     if (!response.ok) throw new Error(`Failed to fetch ${url}`);
