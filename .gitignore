@@ -25,6 +25,8 @@ desktop.ini
 
 # Generated
 public/modules-manifest.json
+public/search-data.json
+public/terraform-content/
 
 # Terraform state (from content examples)
 *.tfstate

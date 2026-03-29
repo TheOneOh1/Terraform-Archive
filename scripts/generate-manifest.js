@@ -119,6 +119,13 @@ function main() {
     process.exit(1);
   }
 
+  // Copy terraform-content to public/ to ensure it is bundled in the build
+  const publicContentDir = path.join(publicDir, 'terraform-content');
+  if (fs.existsSync(publicContentDir)) {
+    fs.rmSync(publicContentDir, { recursive: true, force: true });
+  }
+  fs.cpSync(CONTENT_DIR, publicContentDir, { recursive: true });
+
   // Scan for module directories
   const entries = fs.readdirSync(CONTENT_DIR, { withFileTypes: true });
   const moduleDirs = entries
